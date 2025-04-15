@@ -1,54 +1,80 @@
-# React + TypeScript + Vite
+# 🧠 Editor de Preguntas Interactivas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Crea, gestiona y comparte contenido educativo como nunca antes!
 
-Currently, two official plugins are available:
+Este proyecto es una herramienta poderosa y flexible diseñada para profesores que buscan crear **preguntas interactivas**, listas para ser exportadas, compartidas y utilizadas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Características principales
 
-## Expanding the ESLint configuration
+### 🎓 Roles de usuario
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Profesor / Autor**
+  - Crear preguntas interactivas y tradicionales.
+  - Compartir contenido fácilmente.
+  - Exportar preguntas como archivos HTML o XML con recursos incluidos (imágenes, PDFs, etc).
+- **Administrador**
+  - Gestión general del sistema y usuarios.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+### ❓ Tipos de Preguntas
+
+<!-- #### 🔹 Preguntas No Interactivas (modo clásico)
+
+- **Respuesta corta**
+  Ideal para preguntas como: “¿Quién es…?”
+
+  - Permite múltiples respuestas correctas con variantes comunes.
+  - Verificación semántica básica y tolerancia de errores ortográficos.
+
+- **Selección múltiple**
+  - Define opciones correctas con diferentes pesos.
+  - Penalización opcional por respuestas incorrectas (en porcentaje). -->
+
+<!-- #### 🔸 Preguntas Interactivas (modo avanzado) -->
+
+#### 🔸 Preguntas Interactivas
+
+- Arrastrar y soltar elementos: imágenes, palabras, símbolos, dibujos.
+- Ordenamiento parcial o completo.
+- Puzzle interactivo y dinámico.
+- Vista previa en tiempo real de cada pregunta creada.
+- Validación integrada de cada pregunta antes de su publicación.
+
+---
+
+## 🛠️ Tecnologías
+
+- ⚛️ **React**
+- ⌨️ **TypeScript**
+- ⚡ **Vite** (ultra rápido y moderno)
+- 📦 Modular y preparado para escalabilidad
+
+---
+
+## 🧰 Requisitos previos
+
+### 📦 Instalar Bun
+
+Este proyecto utiliza [**Bun**](https://bun.sh/) como gestor de paquetes y entorno de ejecución.  
+Si aún no lo tienes instalado, puedes hacerlo ejecutando:
+
+```bash
+curl -fsSL https://bun.sh/install | bash
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Nota: Después de instalar, reinicia tu terminal o ejecuta source ~/.bashrc, source ~/.zshrc o equivalente según tu shell, para habilitar el comando bun.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📦 Instalación y configuración inicial
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+# Clonar el repositorio
+git clone https://github.com/MauriErick24/pWeb.git
+cd pWeb
+
+# Instalar dependencias
+bun install
+
+# Iniciar servidor de desarrollo
+bun run dev
 ```
