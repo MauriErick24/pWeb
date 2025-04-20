@@ -1,5 +1,11 @@
+import { Header } from "./components/Header"
+import { NavBar } from "./components/NavBar"
+
 export const App = () => {
   return (
-    <div className='bg-amber-600'>App</div>
+    <div className='min-h-screen bg-sky-600'>
+      <NavBar/>
+      <Header/>
+    </div>
   )
 }
