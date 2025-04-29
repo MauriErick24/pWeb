@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
+import { Dashboard } from "../page/Dashboard";
 const Routes = () =>{
     // const routerForPublic =[
         
@@ -11,6 +12,10 @@ const Routes = () =>{
         {
             path: "/",
             element:<App/>
+        },
+        {
+            path: "/dashboard",
+            element: <Dashboard/>
         }
     ]
     const router = createBrowserRouter([
