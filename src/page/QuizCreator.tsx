@@ -1,4 +1,3 @@
-import React from "react";
 import { NavBar } from "../components/NavBar";
 import { FigurePalette } from "../components/FigurePalette";
 import { Canvas } from "../components/Canvas";
