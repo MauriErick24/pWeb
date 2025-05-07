@@ -1,9 +1,7 @@
 import React from "react";
 import { NavBar } from "../components/NavBar";
-import { Btn1 } from "../components/Btn1";
 import { FigurePalette } from "../components/FigurePalette";
 import { Canvas } from "../components/Canvas";
-import { Tools } from "../components/Tools";
 
 const QuizCreator = () => {
   return (

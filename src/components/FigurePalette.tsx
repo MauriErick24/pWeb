@@ -1,10 +1,10 @@
 // src/components/FigurePalette.tsx
 import React from "react";
 
-const figures = [
-  { type: "circle", label: "Círculo" },
-  { type: "square", label: "Cuadro" },
-];
+// const figures = [
+//   { type: "circle", label: "Círculo" },
+//   { type: "square", label: "Cuadro" },
+// ];
 
 export const FigurePalette = () => {
   const handleDragStart = (event: React.DragEvent, type: string) => {
