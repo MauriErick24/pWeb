@@ -62,6 +62,28 @@ export const Canvas = () => {
     );
   };
 
+  const handleDown = () => {
+    setFigures((prev) =>
+      prev.map((fig) =>
+        fig.selected ? { ...fig, zindex: fig.zindex - 1 } : fig
+      )
+    );
+  };
+
+  const handleFront = () => {
+    setFigures((prev) =>
+      prev.map((fig) =>
+        fig.selected ? { ...fig, zindex: fig.zindex + 100 } : fig
+      )
+    );
+  };
+
+  const handleBack = () => {
+    setFigures((prev) =>
+      prev.map((fig) => (fig.selected ? { ...fig, zindex: 1 } : fig))
+    );
+  };
+
   const handleMouseDown = (
     e: React.MouseEvent<HTMLDivElement>,
     fig: Figure
@@ -94,7 +116,12 @@ export const Canvas = () => {
 
   return (
     <div className="flex gap-5">
-      <Tools onClickBtn={handleUp} />
+      <Tools
+        onClickBtnUp={handleUp}
+        onClickBtnDown={handleDown}
+        onClickBtnFront={handleFront}
+        onClickBtnBack={handleBack}
+      />
       <div
         className="w-full h-[500px] border-2 border-gray-400 relative bg-gray-100 rounded-lg"
         onDragOver={(e) => e.preventDefault()}

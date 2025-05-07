@@ -3,6 +3,7 @@ import { App } from "../App";
 import QuizCreator from "../page/QuizCreator";
 import { Cuestionario } from "../page/Cuestionario";
 import Question from "../page/Question";
+import { Dashboard } from "../page/Dashboard";
 
 const Routes = () => {
   // const routerForPublic =[
@@ -18,11 +19,15 @@ const Routes = () => {
     },
     {
       path: "/dashboard",
-      element: <QuizCreator />,
+      element: <Dashboard />,
     },
     {
       path: "/cuestionario",
       element: <Cuestionario />,
+    },
+    {
+      path: "/create/interactive",
+      element: <QuizCreator />,
     },
     {
       path: "/question",
