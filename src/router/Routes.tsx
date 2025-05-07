@@ -1,7 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { App } from "../App";
-import QuizCreator from "../pages/QuizCreator";
-import { Dashboard } from "../page/Dashboard";
+import QuizCreator from "../page/QuizCreator";
 import { Cuestionario } from "../page/Cuestionario";
 
 const Routes = () => {
@@ -17,12 +16,8 @@ const Routes = () => {
       element: <App />,
     },
     {
-      path: "/quiz/creator",
-      element: <QuizCreator />,
-    },
-    {
       path: "/dashboard",
-      element: <Dashboard />,
+      element: <QuizCreator />,
     },
     {
       path: "/cuestionario",
