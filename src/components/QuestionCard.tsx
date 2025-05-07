@@ -1,7 +1,13 @@
 import { FC } from "react";
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/solid"; // npm install @heroicons/react
 
-type QuestionType = "opcion_multiple" | "completar";
+const typeLabels: Record<QuestionType, string> = {
+    opcion_multiple: "Opción múltiple",
+    completar: "Arrastrar y soltar",
+    respuesta_corta: "Respuesta corta",
+};
+
+type QuestionType = "opcion_multiple" | "completar" | "respuesta_corta";
 
 interface QuestionCardProps {
   id: number;
@@ -21,18 +27,19 @@ export const QuestionCard: FC<QuestionCardProps> = ({
     <div className="border rounded-lg p-4 shadow-md mb-6 bg-white">
       <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center mb-4">
         <span className="text-sm font-medium text-gray-500">
-          {type === "opcion_multiple" ? "1. Opción múltiple" : "2. Arrastrar y soltar"}
+            {/*{type === "opcion_multiple" ? "1. Opción múltiple" : "2. Arrastrar y soltar"}*/}
+            {typeLabels[type]}
         </span>
         <div className="flex items-center gap-2 mt-2 md:mt-0">
-          <select className="text-sm border border-gray-300 rounded px-2 py-1">
-            <option>30 segundos</option>
-            <option>1 minuto</option>
-            <option>1.5 minutos</option>
-          </select>
-          <select className="text-sm border border-gray-300 rounded px-2 py-1">
-            <option>1 punto</option>
-            <option>2 puntos</option>
-          </select>
+            <select className="text-sm border border-gray-300 rounded px-2 py-1">
+                <option>30 segundos</option>
+                <option>1 minuto</option>
+                <option>1.5 minutos</option>
+            </select>
+            <select className="text-sm border border-gray-300 rounded px-2 py-1">
+                <option>1 punto</option>
+                <option>2 puntos</option>
+            </select>
         </div>
       </div>
 
