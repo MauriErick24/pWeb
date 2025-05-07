@@ -133,10 +133,10 @@ export const Canvas = () => {
           <div
             key={fig.id}
             className={`absolute ${
-              fig.type === "circle" ? "rounded-full" : ""
+              fig.type === "circle" ? "rounded-full" : "shadow-lg shadow-gray"
             } ${fig.type === "circle" ? "bg-red-400" : "bg-green-400"} ${
-              fig.selected ? "ring-4 ring-blue-500" : ""
-            } cursor-pointer`}
+              fig.selected ? "ring-4 ring-blue-500" : "shadow-xs shadow-black"
+            } cursor-pointer `}
             style={{
               left: fig.x,
               top: fig.y,
