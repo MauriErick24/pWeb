@@ -16,7 +16,7 @@ export const Header = () => {
           <Link to="/dashboard" className="px-8 py-3 m-2 text-lg font-semibold rounded-2xl bg-sky-300 cursor-pointer border-2 ">
             Entrar al juego
           </Link>
-          <Link to="/cuestionario" className="px-8 py-3 m-2 text-lg font-semibold rounded-2xl bg-sky-300 cursor-pointer border-2 ">
+          <Link to="/question" className="px-8 py-3 m-2 text-lg font-semibold rounded-2xl bg-sky-300 cursor-pointer border-2 ">
             Cuestionario
           </Link>
           <button className="px-8 py-3 m-2 text-lg border rounded-2xl cursor-pointer hover:bg-amber-300">
