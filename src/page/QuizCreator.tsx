@@ -19,6 +19,9 @@ const QuizCreator = () => {
             <input type="file" />
           </div>
         </div>
+        <div className="m-2">
+          <hr />
+        </div>
       </div>
     </div>
   );
