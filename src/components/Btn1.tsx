@@ -1,13 +1,24 @@
 import React, { JSX } from "react";
+import rotateImg from "../assets/rotate-left.png";
+import ZoomIn from "../assets/zoom-in.png";
+import ZoomOut from "../assets/zoom-out.png";
 
 interface Btn1Props {
   nameBtn: string;
-  typeBtn: "up" | "down" | "front" | "back" | "delete"; // 🔧 claves válidas
+  typeBtn:
+    | "up"
+    | "down"
+    | "front"
+    | "back"
+    | "delete"
+    | "zoomin"
+    | "zoomout"
+    | "rotate";
   onClickBtn: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const svgIcons: Record<
-  "up" | "down" | "front" | "back" | "delete",
+  "up" | "down" | "front" | "back" | "delete" | "zoomin" | "zoomout" | "rotate",
   JSX.Element
 > = {
   up: (
@@ -76,6 +87,10 @@ const svgIcons: Record<
       ></path>
     </svg>
   ),
+  zoomin: <img src={ZoomIn} width={24} height={24} />,
+
+  zoomout: <img src={ZoomOut} width={24} height={24} />,
+  rotate: <img src={rotateImg} width={24} height={24} />,
 };
 
 export const Btn1: React.FC<Btn1Props> = ({ nameBtn, typeBtn, onClickBtn }) => {

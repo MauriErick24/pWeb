@@ -4,11 +4,13 @@ import useEscapeKey from "../hooks/useEscape";
 
 interface Figure {
   id: number;
-  type: "circle" | "square";
+  type: "circle" | "square" | "triangle";
   x: number;
   y: number;
   zindex: number;
   selected: boolean;
+  size: number; // nuevo
+  rotation: number; // nuevo
 }
 
 export const Canvas = () => {
@@ -27,22 +29,31 @@ export const Canvas = () => {
   });
 
   const handleDrop = (e: React.DragEvent) => {
-    const type = e.dataTransfer.getData("figure-type") as "circle" | "square";
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const zindex = figures.length;
+    if (draggingId == null) {
+      const type = e.dataTransfer.getData("figure-type") as
+        | "circle"
+        | "square"
+        | "triangle";
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const zindex = figures.length;
 
-    const newFigure: Figure = {
-      id: Date.now(),
-      type,
-      x,
-      y,
-      zindex,
-      selected: false,
-    };
+      const newFigure: Figure = {
+        id: Date.now(),
+        type,
+        x,
+        y,
+        zindex,
+        selected: false,
+        size: 50,
+        rotation: 0,
+      };
 
-    setFigures([...figures, newFigure]);
+      console.log(newFigure);
+
+      setFigures([...figures, newFigure]);
+    }
   };
 
   const handleClickFigure = (actId: number) => {
@@ -96,6 +107,32 @@ export const Canvas = () => {
     handleClickFigure(fig.id);
   };
 
+  const handleZoomIn = () => {
+    setFigures((prev) =>
+      prev.map((fig) => (fig.selected ? { ...fig, size: fig.size + 10 } : fig))
+    );
+  };
+
+  const handleZoomOut = () => {
+    setFigures((prev) =>
+      prev.map((fig) =>
+        fig.selected ? { ...fig, size: Math.max(10, fig.size - 10) } : fig
+      )
+    );
+  };
+
+  const handleRotate = () => {
+    setFigures((prev) =>
+      prev.map((fig) =>
+        fig.selected ? { ...fig, rotation: (fig.rotation + 45) % 360 } : fig
+      )
+    );
+  };
+
+  const handleDelete = () => {
+    setFigures((prev) => prev.filter((fig) => !fig.selected));
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (draggingId !== null) {
       const canvasRect = e.currentTarget.getBoundingClientRect();
@@ -121,6 +158,10 @@ export const Canvas = () => {
         onClickBtnDown={handleDown}
         onClickBtnFront={handleFront}
         onClickBtnBack={handleBack}
+        onClickBtnZoomIn={handleZoomIn}
+        onClickBtnZoomOut={handleZoomOut}
+        onClickBtnRotate={handleRotate}
+        onClickBtnDelete={handleDelete}
       />
       <div
         className="w-full h-[500px] border-2 border-gray-400 relative bg-gray-100 rounded-lg"
@@ -132,17 +173,30 @@ export const Canvas = () => {
         {figures.map((fig) => (
           <div
             key={fig.id}
-            className={`absolute ${
-              fig.type === "circle" ? "rounded-full" : "shadow-lg shadow-gray"
-            } ${fig.type === "circle" ? "bg-red-400" : "bg-green-400"} ${
-              fig.selected ? "ring-4 ring-blue-500" : "shadow-xs shadow-black"
-            } cursor-pointer `}
+            className={`absolute 
+            ${fig.type === "circle" ? "rounded-full bg-red-400" : ""}
+            ${fig.type === "square" ? "bg-green-400" : ""}
+            ${
+              fig.type === "triangle"
+                ? "w-0 h-0 border-l-[32px] border-r-[32px] border-b-[64px] border-transparent border-b-yellow-400"
+                : ""
+            }
+            ${
+              fig.selected
+                ? "ring-4 ring-blue-500"
+                : fig.type === "triangle"
+                ? ""
+                : "shadow-xs shadow-black"
+            }
+            cursor-pointer`}
             style={{
               left: fig.x,
               top: fig.y,
-              width: 50,
-              height: 50,
               zIndex: fig.zindex,
+              width: fig.type === "triangle" ? "auto" : fig.size,
+              height: fig.type === "triangle" ? "auto" : fig.size,
+              transform: `rotate(${fig.rotation}deg)`,
+              transformOrigin: "center",
             }}
             onMouseDown={(e) => handleMouseDown(e, fig)}
           ></div>

@@ -35,7 +35,7 @@ export const FigurePalette = () => {
       />
       <div
         draggable
-        onDragStart={(e) => e.dataTransfer.setData("shape", "triangle")}
+        onDragStart={(e) => handleDragStart(e, "triangle")}
         className="w-0 h-0 border-l-[32px] border-r-[32px] border-b-[64px] border-transparent border-b-yellow-400 cursor-pointer"
       />
     </div>
