@@ -1,10 +1,16 @@
 import { NavBar } from "../components/NavBar";
 import { FigurePalette } from "../components/FigurePalette";
 import { Canvas } from "../components/Canvas";
+import { useState } from "react";
+
+const operators = [">", "<", ">=", "<=", "="];
 
 const QuizCreator = () => {
-  const clickOpcion: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const [answer, setAnswer] = useState<string[]>([]);
+
+  const clickOpcion = (item: string) => {
     console.log("Click");
+    setAnswer((prev) => [...prev, item]);
   };
 
   return (
@@ -30,8 +36,12 @@ const QuizCreator = () => {
             <div className="flex justify-around gap-2">
               <div className="w-2/3">
                 RESPUESTA
-                <div className="border-2 border-gray-400 rounded-sm p-2 h-20">
-                  asdf
+                <div className="border-2 border-gray-400 rounded-sm p-2 h-20 flex gap-1">
+                  {answer.map((resp) => (
+                    <span className="border-3 border-gray-400 rounded-sm p-1">
+                      {resp}
+                    </span>
+                  ))}
                 </div>
               </div>
               <div className="w-1/3">
@@ -42,24 +52,14 @@ const QuizCreator = () => {
                   </div>
                   OPCIONES
                   <div className="border-2 border-gray-400 rounded-sm p-2 flex justify-around">
-                    <button
-                      className="border-3 border-gray-400 rounded-sm p-2 w-10 h-10 flex items-center justify-center"
-                      onClick={(e) => clickOpcion(e)}
-                    >
-                      {">"}
-                    </button>
-                    <button className="border-3 border-gray-400 rounded-sm p-2 w-10 h-10 flex items-center justify-center">
-                      {"<"}
-                    </button>
-                    <button className="border-3 border-gray-400 rounded-sm p-2 w-10 h-10 flex items-center justify-center">
-                      {">="}
-                    </button>
-                    <button className="border-3 border-gray-400 rounded-sm p-2 w-10 h-10 flex items-center justify-center">
-                      {"<="}
-                    </button>
-                    <button className="border-3 border-gray-400 rounded-sm p-2 w-10 h-10 flex items-center justify-center">
-                      {"="}
-                    </button>
+                    {operators.map((op) => (
+                      <button 
+                        className="border-3 border-gray-400 rounded-sm p-2 w-10 h-10 flex items-center justify-center"
+                        onClick={() => clickOpcion(op)}
+                      >
+                        {op}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
