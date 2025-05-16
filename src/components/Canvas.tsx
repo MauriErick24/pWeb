@@ -9,12 +9,17 @@ interface Figure {
   y: number;
   zindex: number;
   selected: boolean;
-  size: number; // nuevo
-  rotation: number; // nuevo
+  size: number;
+  rotation: number;
 }
 
-export const Canvas = () => {
-  const [figures, setFigures] = useState<Figure[]>([]);
+type CanvasProps = {
+  figures: Figure[];
+  setFigures: React.Dispatch<React.SetStateAction<Figure[]>>;
+};
+
+export const Canvas: React.FC<CanvasProps> = ({ figures, setFigures }) => {
+  //const [figures, setFigures] = useState<Figure[]>([]);
   const [draggingId, setDraggingId] = useState<number | null>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
