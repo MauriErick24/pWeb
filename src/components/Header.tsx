@@ -1,29 +1,32 @@
-import { Link } from "react-router-dom";
-
+import React from "react";
+import { BookOpenIcon, UserIcon } from "lucide-react";
 export const Header = () => {
   return (
-    <section className="">
-      <div className="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-3xl">
-        <h1 className="text-4xl font-bold leading-none sm:text-5xl">
-          DESARROLLO DE JUEGO EDUCATIVO PROGRAMACION WEB
-          
-        </h1>
-        <p className="px-8 mt-8 mb-12 text-lg">
-          Cupiditate minima voluptate temporibus quia? Architecto beatae esse ab
-          amet vero eaque explicabo!
-        </p>
-        <div className="flex flex-wrap justify-center">
-          <Link to="/dashboard" className="px-8 py-3 m-2 text-lg font-semibold rounded-2xl bg-sky-300 cursor-pointer border-2 ">
-            Entrar al juego
-          </Link>
-          <Link to="/question" className="px-8 py-3 m-2 text-lg font-semibold rounded-2xl bg-sky-300 cursor-pointer border-2 ">
-            Cuestionario
-          </Link>
-          <button className="px-8 py-3 m-2 text-lg border rounded-2xl cursor-pointer hover:bg-amber-300">
-            Learn more
-          </button>
+    <header className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white shadow-md">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <BookOpenIcon size={24} />
+          <span className="text-xl font-semibold">EduShapes</span>
         </div>
+        <nav className="hidden md:flex items-center space-x-6">
+          <a href="#" className="hover:text-indigo-100 transition-colors">
+            Inicio
+          </a>
+          <a href="#" className="hover:text-indigo-100 transition-colors">
+            Ejercicios
+          </a>
+          <a href="#" className="hover:text-indigo-100 transition-colors">
+            Recursos
+          </a>
+          <a href="#" className="hover:text-indigo-100 transition-colors">
+            Ayuda
+          </a>
+        </nav>
+        <button className="bg-white text-indigo-600 px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-indigo-50 transition-colors">
+          <UserIcon size={18} />
+          <span>Iniciar Sesión</span>
+        </button>
       </div>
-    </section>
+    </header>
   );
 };

@@ -1,12 +1,12 @@
 import React from "react";
 
-export const FigurePalette = () => {
+export const Palette = () => {
   const handleDragStart = (event: React.DragEvent, type: string) => {
     event.dataTransfer.setData("figure-type", type);
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 border-2 border-black rounded-lg">
+    <div className="flex flex-col gap-4 items-center">
       <div
         draggable
         onDragStart={(e) => handleDragStart(e, "circle")}
@@ -25,3 +25,5 @@ export const FigurePalette = () => {
     </div>
   );
 };
+
+export default Palette;
