@@ -1,4 +1,3 @@
-import React from "react";
 import { BookOpenIcon, UserIcon } from "lucide-react";
 export const Header = () => {
   return (

@@ -1,12 +1,14 @@
 // ruta -> question
-import { NavBar } from "../components/NavBar";
+//import { NavBar } from "../components/NavBar";
+import { Header } from "../components/Header";
 import { QuestionCard } from "../components/QuestionCard";
 import { AddQuestionMenu } from "../components/AddQuestionMenu";
 
 const QuestionCardPage = () => {
   return (
     <>
-      <NavBar />
+      {/*<NavBar />*/}
+      <Header />
       <div className="p-6 bg-gray-50 min-h-screen">
         <div className="flex justify-end mb-4">
           <AddQuestionMenu
