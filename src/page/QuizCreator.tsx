@@ -83,11 +83,11 @@ const QuizCreator = () => {
               <div className="w-1/3">
                 FIGURAS UTILIZADAS
                 <div className="">
-                  <div className="border-2 border-gray-400 rounded-sm p-2 mb-5 h-20">
+                  <div className="border-2 border-gray-400 rounded-sm p-2 mb-5 h-20 flex justify-around items-center">
                     {figures.map((fig) => (
                       <div
                         key={fig.id}
-                        className={`absolute 
+                        className={`
                         ${
                           fig.type === "circle" ? "rounded-full bg-red-400" : ""
                         }
@@ -97,18 +97,9 @@ const QuizCreator = () => {
                             ? "w-0 h-0 border-l-[32px] border-r-[32px] border-b-[64px] border-transparent border-b-yellow-400"
                             : ""
                         }
-                        ${
-                          fig.selected
-                            ? "ring-4 ring-blue-500"
-                            : fig.type === "triangle"
-                            ? ""
-                            : "shadow-xs shadow-black"
-                        }
+                        
                         cursor-pointer`}
                         style={{
-                          // left: fig.x,
-                          // top: fig.y,
-                          // zIndex: fig.zindex,
                           width: 50,
                           height: 50,
                         }}
