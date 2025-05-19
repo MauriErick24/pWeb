@@ -1,12 +1,12 @@
 import { Header } from "./components/Header";
-import { NavBar } from "./components/NavBar";
+import { HomePage } from "./components/HomePage";
 
 export const App = () => {
   return (
     <>
-      <div className="min-h-screen bg-sky-600">
+      <div className="min-h-screen">
         <Header />
-        <NavBar />
+        <HomePage />
       </div>
     </>
   );

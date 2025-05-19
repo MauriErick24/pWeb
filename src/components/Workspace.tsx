@@ -107,7 +107,7 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures }) => {
         <h2 className="font-medium text-gray-700">Área de trabajo</h2>
       </div>
 
-      <div className="aspect-video w-full bg-white p-4 flex items-center justify-center relative">
+      <div className="aspect-video w-full bg-white p-4 flex items-center justify-center relative overflow-x-auto"> {/* scroll -> overflow-x-auto */}
         <div
           className="w-full h-[500px] relative "
           onDragOver={(e) => e.preventDefault()}

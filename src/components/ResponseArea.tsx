@@ -81,7 +81,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h3 className="font-medium text-gray-700 mb-2">RESPUESTA</h3>
-          <div className="flex items-center gap-2 p-3 border border-gray-200 rounded-lg min-h-16">
+          <div className="flex flex-wrap items-center gap-2 p-3 border border-gray-200 rounded-lg min-h-16">
             {answer.map((resp, index) => (
               <span key={index}>
                 {resp.kind === "icon" ? (
@@ -151,7 +151,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
         </div>
         <div>
           <h3 className="font-medium text-gray-700 mb-2">FIGURAS UTILIZADAS</h3>
-          <div className="flex items-center gap-4 p-3 border border-gray-200 rounded-1g min-h-16">
+          <div className="flex flex-wrap items-center gap-4 p-3 border border-gray-200 rounded-1g min-h-16">
             {/* <div className="w-10 h-10 rounded-full bg-red-400"></div>
             <div className="w-10 h-10 bg-green-400"></div> */}
             {figures.map((fig) => (

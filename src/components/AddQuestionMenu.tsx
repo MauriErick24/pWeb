@@ -19,7 +19,7 @@ export const AddQuestionMenu = ({ routes }: Props) => {
     <div className="relative">
       <button
         //className="bg-purple-200 px-4 py-2 rounded"
-        className="bg-purple-200 hover:bg-purple-300 text-purple-900 font-semibold py-2 px-4 rounded-lg transition-all"
+        className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-all"
         onClick={() => setOpen(!open)}
       >
         + Añadir pregunta
