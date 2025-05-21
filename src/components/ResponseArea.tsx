@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ChevronRightIcon, ChevronLeftIcon, Equal } from "lucide-react";
 import { toast } from "sonner";
 import { ModalPreview } from "./ModalPreview";
+import { ContentPreview } from "./ContentPreview";
 
 interface Figure {
   id: number;
@@ -233,7 +234,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
           Vista previa
         </button>
         <ModalPreview isOpen={isModalOpen} onClose={closeModal} title="Pregunta Interativa">
-          <h1>dfdfdf</h1>
+          <ContentPreview figures={figures} />
         </ModalPreview>
         <button
           className={`px-6 py-2 rounded-lg transition-colors ${

@@ -24,11 +24,11 @@ export const ModalPreview: FC<PreviewProps> = ({ isOpen, onClose, title, childre
               className="text-gray-400 rounded-lg w-8 h-8 inline-flex justify-center items-center hover:bg-gray-600 hover:text-white"
               onClick={onClose}
             >
-              <X size={18} />
+              <X size={30} />
             </button>
           </div>
 
-          {/* Modal body PENDOIENTEEEEE revision de estilos */}
+          {/* Modal body PENDIENTEEEEE revision de estilos */}
           <div className="p-4 md:p-5 space-y-4 text-base leading-relaxed text-gray-500 dark:text-gray-400">
             {children}
           </div>
