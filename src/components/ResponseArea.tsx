@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChevronRightIcon, ChevronLeftIcon, Equal } from "lucide-react";
 import { toast } from "sonner";
+import { ModalPreview } from "./ModalPreview";
 
 interface Figure {
   id: number;
@@ -26,6 +27,15 @@ type AnswerItem =
 
 export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
   const [answer, setAnswer] = useState<AnswerItem[]>([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const handleClickOtion = (item: IconType) => {
     const last = answer[answer.length - 1];
@@ -217,9 +227,14 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-2">
-        <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+        <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+          onClick={openModal}
+        >
           Vista previa
         </button>
+        <ModalPreview isOpen={isModalOpen} onClose={closeModal} title="Pregunta Interativa">
+          <h1>dfdfdf</h1>
+        </ModalPreview>
         <button
           className={`px-6 py-2 rounded-lg transition-colors ${
             isValidAnswer()
