@@ -4,6 +4,7 @@ import { ControlPanel } from "../components/ControlPanel";
 import { Workspace } from "../components/Workspace";
 import { ResponseArea } from "../components/ResponseArea";
 import Palette from "../components/Palette";
+import { QuestionDetails } from "../components/QuestionDetails";
 
 interface Figure {
   id: number;
@@ -24,6 +25,8 @@ const QuizCreator = () => {
       <div className="flex flex-col w-full min-h-screen bg-gray-50">
         <Header />
         <main className="flex-1 container mx-auto px-4 py-6 md:px-6">
+          <QuestionDetails />
+
           <h1 className="text-2xl font-bold text-indigo-800 mb-6">
             Apila las figuras
           </h1>

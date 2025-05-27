@@ -205,7 +205,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
           >
             <ChevronLeftIcon size={24} />
           </button>
-          <button
+          {/* <button
             className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center"
             onClick={() => handleClickOtion(">=")}
           >
@@ -218,7 +218,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
           >
             <ChevronLeftIcon size={24} />
             <Equal size={24} />
-          </button>
+          </button> */}
           <button
             className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
             onClick={() => handleClickOtion("=")}
@@ -228,12 +228,17 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
         </div>
       </div>
       <div className="mt-6 flex justify-end gap-2">
-        <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+        <button
+          className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
           onClick={openModal}
         >
           Vista previa
         </button>
-        <ModalPreview isOpen={isModalOpen} onClose={closeModal} title="Pregunta Interativa">
+        <ModalPreview
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          title="Pregunta Interativa"
+        >
           <ContentPreview figures={figures} />
         </ModalPreview>
         <button
