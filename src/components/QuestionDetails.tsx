@@ -2,7 +2,7 @@ import React from "react";
 
 export const QuestionDetails = () => {
   return (
-    <div className="p-4 sm:p-6 md:p-8">
+    <div>
       <h1 className="text-2xl font-bold text-indigo-800 mb-2">Titulo</h1>
       <input
         type="text"
