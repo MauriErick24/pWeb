@@ -3,6 +3,7 @@ import { ChevronRightIcon, ChevronLeftIcon, Equal } from "lucide-react";
 import { toast } from "sonner";
 import { ModalPreview } from "./ModalPreview";
 import { ContentPreview } from "./ContentPreview";
+import html2canvas from "html2canvas-pro";
 
 interface Figure {
   id: number;
@@ -18,6 +19,7 @@ interface Figure {
 type ResponseAreaType = {
   figures: Figure[];
   setFigures: React.Dispatch<React.SetStateAction<Figure[]>>;
+  canvasRef: React.RefObject<HTMLDivElement | null>;
 };
 
 type IconType = ">" | "<" | ">=" | "<=" | "=";
@@ -26,12 +28,20 @@ type AnswerItem =
   | { kind: "figure"; data: Figure }
   | { kind: "icon"; value: IconType };
 
-export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
+export const ResponseArea: React.FC<ResponseAreaType> = ({ figures, canvasRef }) => {
   const [answer, setAnswer] = useState<AnswerItem[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
 
-  const openModal = () => {
-    setModalOpen(true);
+  const openModal = async () => {
+    if (canvasRef.current) {
+      const canvas = await html2canvas(canvasRef.current);
+      const dataURL = canvas.toDataURL("image/png");
+      setImage(dataURL);
+      setModalOpen(true);
+    } else {
+      toast.error("No se pudo capturar el área de trabajo.");
+    }
   };
 
   const closeModal = () => {
@@ -239,7 +249,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures }) => {
           onClose={closeModal}
           title="Pregunta Interativa"
         >
-          <ContentPreview figures={figures} />
+          <ContentPreview figures={figures} image={image} />
         </ModalPreview>
         <button
           className={`px-6 py-2 rounded-lg transition-colors ${

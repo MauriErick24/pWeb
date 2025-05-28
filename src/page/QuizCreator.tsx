@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Header } from "../components/Header";
 import { ControlPanel } from "../components/ControlPanel";
 import { Workspace } from "../components/Workspace";
@@ -19,6 +19,7 @@ interface Figure {
 
 const QuizCreator = () => {
   const [figures, setFigures] = useState<Figure[]>([]);
+  const canvasRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <div>
@@ -35,7 +36,7 @@ const QuizCreator = () => {
               <ControlPanel setFigures={setFigures} figures={[]} />
             </div>
             <div className="lg:col-span-7">
-              <Workspace figures={figures} setFigures={setFigures} />
+              <Workspace figures={figures} setFigures={setFigures} canvasRef={canvasRef} />
             </div>
             <div className="lg:col-span-3 bg-white rounded-lg shadow-sm p-4 border border-gray-100">
               <h2 className="font-semibold text-gray-700 mb-3">
@@ -44,7 +45,7 @@ const QuizCreator = () => {
               <Palette />
             </div>
           </div>
-          <ResponseArea figures={figures} />
+          <ResponseArea figures={figures} canvasRef={canvasRef} />
         </main>
       </div>
     </div>
