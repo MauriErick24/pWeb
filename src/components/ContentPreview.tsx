@@ -15,12 +15,13 @@ interface Figure {
 
 type ContentPreviewType = {
   figures: Figure[];
+  image: string | null;
 };
 
 type AnswerItem =
   | { kind: "figure"; data: Figure };
 
-export const ContentPreview: React.FC<ContentPreviewType> = ({ figures }) => {
+export const ContentPreview: React.FC<ContentPreviewType> = ({ figures, image }) => {
   const [answer, setAnswer] = useState<AnswerItem[]>([]);
   
   const handleSelect = (item: Figure) => {
@@ -44,6 +45,11 @@ export const ContentPreview: React.FC<ContentPreviewType> = ({ figures }) => {
     <div>
       <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-100 p-4">
         {/*aqui va la foto de las figuras utilizadas en el area de trabajo*/}
+        {image ? (
+          <img src={image} alt="Área de trabajo" className="w-full rounded shadow" />
+        ) : (
+          <p className="text-gray-400">No hay imagen para mostrar</p>
+        )}
       </div>
       <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-100 p-4">
       <h2 className="text-xl font-medium text-indigo-800 mb-4">

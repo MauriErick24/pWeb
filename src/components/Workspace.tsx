@@ -15,9 +15,10 @@ interface Figure {
 type CanvasProps = {
   figures: Figure[];
   setFigures: React.Dispatch<React.SetStateAction<Figure[]>>;
+  canvasRef?: React.RefObject<HTMLDivElement | null>;
 };
 
-export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures }) => {
+export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRef }) => {
   const [draggingId, setDraggingId] = useState<number | null>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -110,6 +111,7 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures }) => {
       <div className="aspect-video w-full bg-white p-4 flex items-center justify-center relative overflow-x-auto"> {/* scroll -> overflow-x-auto */}
         <div
           className="w-full h-[500px] relative "
+          ref={canvasRef}
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
           onMouseMove={handleMouseMove}
