@@ -28,7 +28,10 @@ type AnswerItem =
   | { kind: "figure"; data: Figure }
   | { kind: "icon"; value: IconType };
 
-export const ResponseArea: React.FC<ResponseAreaType> = ({ figures, canvasRef }) => {
+export const ResponseArea: React.FC<ResponseAreaType> = ({
+  figures,
+  canvasRef,
+}) => {
   const [answer, setAnswer] = useState<AnswerItem[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [image, setImage] = useState<string | null>(null);
@@ -92,6 +95,12 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures, canvasRef })
 
   const handleReset = () => {
     setAnswer([]);
+  };
+
+  const handleResetLast = () => {
+    if (answer.length > 0) {
+      setAnswer((prev) => prev.slice(0, -1));
+    }
   };
 
   return (
@@ -167,6 +176,12 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({ figures, canvasRef })
               onClick={handleReset}
             >
               Reiniciar respuesta
+            </button>
+            <button
+              className="text-sm text-indigo-600 hover:text-indigo-800  p-1 m-1"
+              onClick={handleResetLast}
+            >
+              Borrar ultimo
             </button>
           </div>
         </div>
