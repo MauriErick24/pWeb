@@ -224,12 +224,12 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
           >
             <ChevronRightIcon size={24} />
           </button>
-          <button
+          {/* <button
             className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
             onClick={() => handleClickOtion("<")}
           >
             <ChevronLeftIcon size={24} />
-          </button>
+          </button> */}
           {/* <button
             className="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 flex items-center"
             onClick={() => handleClickOtion(">=")}
