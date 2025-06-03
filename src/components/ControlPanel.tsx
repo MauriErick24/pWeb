@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "sonner";
 import {
   ArrowUpIcon,
   ArrowDownIcon,
@@ -6,6 +7,7 @@ import {
   ZoomOutIcon,
   RotateCwIcon,
   TrashIcon,
+  Scissors,
 } from "lucide-react";
 
 interface Figure {
@@ -25,7 +27,7 @@ type ControlPanelType = {
   setFigures: React.Dispatch<React.SetStateAction<Figure[]>>;
 };
 
-export const ControlPanel: React.FC<ControlPanelType> = ({ setFigures }) => {
+export const ControlPanel: React.FC<ControlPanelType> = ({ setFigures, figures }) => {
   const handleUp = () => {
     setFigures((prev) =>
       prev.map((fig) =>
@@ -76,6 +78,37 @@ export const ControlPanel: React.FC<ControlPanelType> = ({ setFigures }) => {
         fig.selected ? { ...fig, rotation: (fig.rotation + 45) % 360 } : fig
       )
     );
+  };
+
+  const handleRemoveBackground = async () => {
+    const selectedImage = figures.find((fig) => fig.selected && fig.type === "image");
+
+    if (!selectedImage || !selectedImage.src) {
+      toast.warning("Selecciona una imagen para quitar el fondo.");
+      return;
+    }
+
+    try {
+      const blob = await fetch(selectedImage.src).then((res) => res.blob());
+      const formData = new FormData();
+      formData.append("image", blob, "image.png");
+
+      const response = await fetch("http://localhost:5000/remove-background", {
+        method: "POST",
+        body: formData,
+      });
+
+      const resultBlob = await response.blob();
+      const newUrl = URL.createObjectURL(resultBlob);
+      
+      setFigures((prev) =>
+        prev.map((fig) =>
+          fig.id === selectedImage.id ? { ...fig, src: newUrl } : fig
+        )
+      );
+    } catch (error) {
+      console.error("Error al quitar fondo:", error);
+    }
   };
 
   const handleDelete = () => {
@@ -143,6 +176,13 @@ export const ControlPanel: React.FC<ControlPanelType> = ({ setFigures }) => {
           >
             <RotateCwIcon size={18} />
             <span>Rotar</span>
+          </button>
+          <button
+            className="bg-gray-100 hover:bg-gray-200 p-2 rounded flex items-center justify-center gap-2"
+            onClick={handleRemoveBackground}
+          >
+            <Scissors size={18} />
+            <span>Quitar fondo</span>
           </button>
         </div>
       </div>

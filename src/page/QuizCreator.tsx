@@ -34,7 +34,7 @@ const QuizCreator = () => {
           </h1>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-2">
-              <ControlPanel setFigures={setFigures} figures={[]} />
+              <ControlPanel setFigures={setFigures} figures={figures} />
             </div>
             <div className="lg:col-span-7">
               <Workspace figures={figures} setFigures={setFigures} canvasRef={canvasRef} />
