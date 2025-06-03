@@ -8,13 +8,14 @@ import { QuestionDetails } from "../components/QuestionDetails";
 
 interface Figure {
   id: number;
-  type: "circle" | "square" | "triangle";
+  type: "circle" | "square" | "triangle" | "image";
   x: number;
   y: number;
   zindex: number;
   selected: boolean;
   size: number;
   rotation: number;
+  src?: string;
 }
 
 const QuizCreator = () => {
@@ -42,7 +43,7 @@ const QuizCreator = () => {
               <h2 className="font-semibold text-gray-700 mb-3">
                 Figuras disponibles
               </h2>
-              <Palette />
+              <Palette onAddImage={() => {}} />
             </div>
           </div>
           <ResponseArea figures={figures} canvasRef={canvasRef} />

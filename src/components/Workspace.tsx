@@ -3,13 +3,14 @@ import useEscapeKey from "../hooks/useEscape";
 
 interface Figure {
   id: number;
-  type: "circle" | "square" | "triangle";
+  type: "circle" | "square" | "triangle" | "image";
   x: number;
   y: number;
   zindex: number;
   selected: boolean;
   size: number;
   rotation: number;
+  src?: string;
 }
 
 type CanvasProps = {
@@ -54,10 +55,8 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRe
 
   const handleDrop = (e: React.DragEvent) => {
     if (draggingId == null) {
-      const type = e.dataTransfer.getData("figure-type") as
-        | "circle"
-        | "square"
-        | "triangle";
+      const type = e.dataTransfer.getData("figure-type") as Figure["type"];
+      const src = e.dataTransfer.getData("image-src");
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -72,6 +71,7 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRe
         selected: false,
         size: 50,
         rotation: 0,
+        ...(type === "image" && { src }),
       };
 
       console.log(newFigure);
@@ -120,7 +120,8 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRe
           {figures.map((fig) => (
             <div
               key={fig.id}
-              className={`absolute 
+              className={`absolute ${fig.selected ? "ring-4 ring-blue-500" : ""} cursor-pointer`}
+              /*className={`absolute 
             ${fig.type === "circle" ? "rounded-full bg-red-400" : ""}
             ${fig.type === "square" ? "bg-green-400" : ""}
             ${
@@ -135,7 +136,7 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRe
                 ? ""
                 : "shadow-xs shadow-black"
             }
-            cursor-pointer`}
+            cursor-pointer`}*/
               style={{
                 left: fig.x,
                 top: fig.y,
@@ -146,7 +147,21 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRe
                 transformOrigin: "center",
               }}
               onMouseDown={(e) => handleMouseDown(e, fig)}
-            ></div>
+            >
+              {fig.type === "image" && fig.src ? (
+                <img
+                  src={fig.src}
+                  alt="imagen"
+                  className="w-full h-full object-contain rounded"
+                />
+              ) : fig.type === "circle" ? (
+                <div className="w-full h-full rounded-full bg-red-400 shadow" />
+              ) : fig.type === "square" ? (
+                <div className="w-full h-full bg-green-400 shadow" />
+              ) : fig.type === "triangle" ? (
+                <div className="w-0 h-0 border-l-[32px] border-r-[32px] border-b-[64px] border-transparent border-b-yellow-400" />
+              ) : null}
+            </div>
           ))}
         </div>
       </div>

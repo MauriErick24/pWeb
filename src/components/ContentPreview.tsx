@@ -4,13 +4,14 @@ import { TrashIcon } from "lucide-react";
 
 interface Figure {
   id: number;
-  type: "circle" | "square" | "triangle";
+  type: "circle" | "square" | "triangle" | "image";
   x: number;
   y: number;
   zindex: number;
   selected: boolean;
   size: number;
   rotation: number;
+  src?: string;
 }
 
 type ContentPreviewType = {
@@ -61,27 +62,24 @@ export const ContentPreview: React.FC<ContentPreviewType> = ({ figures, image })
           <div className="flex flex-wrap items-center gap-2 p-3 border border-gray-200 rounded-lg min-h-16">
             {answer.map((resp, index) => (
               <span key={index}>
-                {<div
-                    className={`
-                                w-10 h-10
-                                ${
-                                  resp.data.type === "circle"
-                                    ? "rounded-full bg-red-400"
-                                    : ""
-                                }
-                                ${
-                                  resp.data.type === "square"
-                                    ? "bg-green-400"
-                                    : ""
-                                }
-                                ${
-                                  resp.data.type === "triangle"
-                                    ? "w-0 h-0 border-l-[22px] border-r-[22px] border-b-[34px] border-transparent border-b-yellow-400"
-                                    : ""
-                                }
-                              `}
-                ></div>
-                }
+                <div
+                  className="flex items-center justify-center"
+                  style={{ width: 40, height: 40 }}
+                >
+                  {resp.data.type === "circle" ? (
+                    <div className="w-10 h-10 rounded-full bg-red-400"></div>
+                  ) : resp.data.type === "square" ? (
+                    <div className="w-10 h-10 bg-green-400"></div>
+                  ) : resp.data.type === "triangle" ? (
+                    <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[40px] border-transparent border-b-yellow-400"></div>
+                  ) : resp.data.type === "image" && resp.data.src ? (
+                    <img
+                      src={resp.data.src}
+                      alt="Figura imagen"
+                      className="w-full h-full object-contain rounded"
+                    />
+                  ) : null}
+                </div>
               </span>
             ))}
           </div>
@@ -101,26 +99,27 @@ export const ContentPreview: React.FC<ContentPreviewType> = ({ figures, image })
             {figures.map((fig) => (
               <div
                 key={fig.id}
-                className={`
-                        ${
-                          fig.type === "circle" ? "rounded-full bg-red-400" : ""
-                        }
-                        ${
-                          fig.type === "square" ? "bg-green-400" : ""
-                        }
-                        ${
-                          fig.type === "triangle"
-                            ? "w-0 h-0 border-l-[32px] border-r-[32px] border-b-[64px] border-transparent border-b-yellow-400"
-                            : ""
-                        }
-
-                        cursor-pointer`}
+                className={`cursor-pointer`}
                 style={{
                   width: 50,
                   height: 50,
                 }}
                 onClick={() => handleSelect(fig)}
-              ></div>
+              >
+                {fig.type === "circle" ? (
+                  <div className="w-full h-full rounded-full bg-red-400"></div>
+                ) : fig.type === "square" ? (
+                  <div className="w-full h-full bg-green-400"></div>
+                ) : fig.type === "triangle" ? (
+                  <div className="w-0 h-0 border-l-[25px] border-r-[25px] border-b-[50px] border-transparent border-b-yellow-400"></div>
+                ) : fig.type === "image" && fig.src ? (
+                  <img
+                    src={fig.src}
+                    alt="Imagen figura"
+                    className="w-full h-full object-contain rounded"
+                  />
+                ) : null}
+              </div>
             ))}
           </div>
         </div>

@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
-export const Palette = () => {
-  const handleDragStart = (event: React.DragEvent, type: string) => {
+type Props = {
+  onAddImage: (imgUrl: string) => void;
+};
+
+export const Palette: React.FC<Props> = ({ onAddImage }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+
+  const handleDragStart = (event: React.DragEvent, type: string, src?: string) => {
     event.dataTransfer.setData("figure-type", type);
+    if(src) {
+      event.dataTransfer.setData("image-src", src);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+    setUploadedImages(prev => [...prev, url]);
+    onAddImage(url);
   };
 
   return (
@@ -22,6 +41,30 @@ export const Palette = () => {
         onDragStart={(e) => handleDragStart(e, "triangle")}
         className="w-0 h-0 border-l-[32px] border-r-[32px] border-b-[64px] border-transparent border-b-yellow-400 cursor-pointer"
       />
+      {/***********************/}
+      {uploadedImages.map((src, index) => (
+        <img
+          key={index}
+          src={src}
+          draggable
+          onDragStart={(e) => handleDragStart(e, "image", src)}
+          className="w-16 h-16 object-contain border border-gray-300 rounded cursor-pointer"
+        />
+      ))}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className="hidden"
+      />
+      <button
+        className="mt-4 px-3 py-1 bg-blue-500 text-white rounded text-sm"
+        onClick={() => fileInputRef.current?.click()}
+      >
+        Subir imagen
+      </button>
+      {/***********************/}
     </div>
   );
 };

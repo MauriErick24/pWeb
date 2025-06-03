@@ -7,13 +7,14 @@ import html2canvas from "html2canvas-pro";
 
 interface Figure {
   id: number;
-  type: "circle" | "square" | "triangle";
+  type: "circle" | "square" | "triangle" | "image";
   x: number;
   y: number;
   zindex: number;
   selected: boolean;
   size: number;
   rotation: number;
+  src?: string;
 }
 
 type ResponseAreaType = {
@@ -142,26 +143,21 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
                     }
                   })()
                 ) : (
-                  <div
-                    className={`
-                                w-10 h-10
-                                ${
-                                  resp.data.type === "circle"
-                                    ? "rounded-full bg-red-400"
-                                    : ""
-                                }
-                                ${
-                                  resp.data.type === "square"
-                                    ? "bg-green-400"
-                                    : ""
-                                }
-                                ${
-                                  resp.data.type === "triangle"
-                                    ? "w-0 h-0 border-l-[22px] border-r-[22px] border-b-[34px] border-transparent border-b-yellow-400"
-                                    : ""
-                                }
-                              `}
-                  ></div>
+                  <div style={{ width: 40, height: 40 }} className="flex items-center justify-center">
+                    {resp.data.type === "circle" ? (
+                      <div className="w-10 h-10 rounded-full bg-red-400"></div>
+                    ) : resp.data.type === "square" ? (
+                      <div className="w-10 h-10 bg-green-400"></div>
+                    ) : resp.data.type === "triangle" ? (
+                      <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[40px] border-transparent border-b-yellow-400"></div>
+                    ) : resp.data.type === "image" && resp.data.src ? (
+                      <img
+                        src={resp.data.src}
+                        alt="Respuesta figura"
+                        className="w-full h-full object-contain rounded"
+                      />
+                    ) : null}
+                  </div>
                 )}
               </span>
             ))}
@@ -193,7 +189,8 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
             {figures.map((fig) => (
               <div
                 key={fig.id}
-                className={`
+                className={`cursor-pointer`}
+                /*className={`
                         ${
                           fig.type === "circle" ? "rounded-full bg-red-400" : ""
                         }
@@ -204,13 +201,27 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
                             : ""
                         }
 
-                        cursor-pointer`}
+                        cursor-pointer`}*/
                 style={{
                   width: 50,
                   height: 50,
                 }}
                 onClick={() => handleSelect(fig)}
-              ></div>
+              >
+                {fig.type === "circle" ? (
+                  <div className="w-full h-full rounded-full bg-red-400"></div>
+                ) : fig.type === "square" ? (
+                  <div className="w-full h-full bg-green-400"></div>
+                ) : fig.type === "triangle" ? (
+                  <div className="w-0 h-0 border-l-[25px] border-r-[25px] border-b-[50px] border-transparent border-b-yellow-400"></div>
+                ) : fig.type === "image" && fig.src ? (
+                  <img
+                    src={fig.src}
+                    alt="Imagen figura"
+                    className="w-full h-full object-contain rounded"
+                  />
+                ) : null}
+              </div>
             ))}
           </div>
         </div>

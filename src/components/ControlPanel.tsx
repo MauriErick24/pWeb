@@ -10,13 +10,14 @@ import {
 
 interface Figure {
   id: number;
-  type: "circle" | "square" | "triangle";
+  type: "circle" | "square" | "triangle" | "image";
   x: number;
   y: number;
   zindex: number;
   selected: boolean;
   size: number;
   rotation: number;
+  src?: string;
 }
 
 type ControlPanelType = {
