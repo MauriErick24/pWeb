@@ -3,39 +3,48 @@ import { App } from "../App";
 import QuizCreator from "../page/QuizCreator";
 import { Cuestionario } from "../page/Cuestionario";
 import Question from "../page/Question";
-import { Dashboard } from "../page/Dashboard";
+import Login from "../page/Login";
+import Register from "../page/Register";
+import ProtectedRoute from "../components/ProtectedRoute";
 
-const Routes = () => {
-  // const routerForPublic =[
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/cuestionario",
+    element: (
+      <ProtectedRoute>
+        <Cuestionario />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/create/interactive",
+    element: (
+      <ProtectedRoute>
+        <QuizCreator />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/question",
+    element: (
+      <ProtectedRoute>
+        <Question />
+      </ProtectedRoute>
+    ),
+  },
+]);
 
-  // ];
-  // const routerForAuthenticatedOnly=[
-
-  // ];
-  const routesForNotAuthenticatedOnly = [
-    {
-      path: "/",
-      element: <App />,
-    },
-    {
-      path: "/dashboard",
-      element: <Dashboard />,
-    },
-    {
-      path: "/cuestionario",
-      element: <Cuestionario />,
-    },
-    {
-      path: "/create/interactive",
-      element: <QuizCreator />,
-    },
-    {
-      path: "/question",
-      element: <Question />,
-    },
-  ];
-  const router = createBrowserRouter([...routesForNotAuthenticatedOnly]);
-  return <RouterProvider router={router} />;
-};
-
+const Routes = () => <RouterProvider router={router} />;
 export default Routes;

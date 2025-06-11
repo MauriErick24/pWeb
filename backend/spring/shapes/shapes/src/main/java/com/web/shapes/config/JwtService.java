@@ -3,6 +3,7 @@ package com.web.shapes.config;
 import com.web.shapes.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,16 @@ public class JwtService {
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
+
+    public String extractUsernameFromRequest(HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+        final String token = authHeader.substring(7);
+        return extractUsername(token);
+    }
+
 
     public <T> T extractClaim(String token, Function<Claims, T> resolver) {
         final Claims claims = Jwts.parserBuilder()
