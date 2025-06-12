@@ -1,25 +1,26 @@
-import { useState } from "react";
-import { RichTextEditor } from "./RichTextEditor";
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
 
 export const QuestionDetails = () => {
-  const [titulo, setTitulo] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [consigna, setConsigna] = useState("");
+  const tituloEditor = useQuill();
+  const descripcionEditor = useQuill();
+  const consignaEditor = useQuill();
   return (
     <div>
       <h1 className="text-2xl font-bold text-indigo-800 mb-2">Titulo</h1>
-      <RichTextEditor content={titulo} setContent={setTitulo} />
-      {/*<input
-        type="text"
-        placeholder="Titulo..."
-        className="w-full p-1 border border-gray-200 rounded-lg hover:bg-gray-50 mb-4"
-      />*/}
+      <div className="mb-4 bg-white border border-gray-200 rounded-lg p-2">
+        <div ref={tituloEditor.quillRef} />
+      </div>
 
       <h1 className="text-2xl font-bold text-indigo-800 mb-2">Descripcion</h1>
-      <RichTextEditor content={descripcion} setContent={setDescripcion} />
+      <div className="mb-4 bg-white border border-gray-200 rounded-lg p-2">
+        <div ref={descripcionEditor.quillRef} />
+      </div>
 
       <h1 className="text-2xl font-bold text-indigo-800 mb-2">Consigna</h1>
-      <RichTextEditor content={consigna} setContent={setConsigna} />
+      <div className="mb-4 bg-white border border-gray-200 rounded-lg p-2">
+        <div ref={consignaEditor.quillRef} />
+      </div>
 
       {/* Dificultad - Edad */}
       <div className="mt-6">
