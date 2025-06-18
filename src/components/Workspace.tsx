@@ -19,7 +19,11 @@ type CanvasProps = {
   canvasRef?: React.RefObject<HTMLDivElement | null>;
 };
 
-export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRef }) => {
+export const Workspace: React.FC<CanvasProps> = ({
+  figures,
+  setFigures,
+  canvasRef,
+}) => {
   const [draggingId, setDraggingId] = useState<number | null>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -108,7 +112,9 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRe
         <h2 className="font-medium text-gray-700">Área de trabajo</h2>
       </div>
 
-      <div className="aspect-video w-full bg-white p-4 flex items-center justify-center relative overflow-x-auto"> {/* scroll -> overflow-x-auto */}
+      <div className="aspect-video w-full bg-white p-4 flex items-center justify-center relative overflow-x-auto">
+        {" "}
+        {/* scroll -> overflow-x-auto */}
         <div
           className="w-full h-[500px] relative "
           ref={canvasRef}
@@ -120,23 +126,9 @@ export const Workspace: React.FC<CanvasProps> = ({ figures, setFigures, canvasRe
           {figures.map((fig) => (
             <div
               key={fig.id}
-              className={`absolute ${fig.selected ? "ring-4 ring-blue-500" : ""} cursor-pointer`}
-              /*className={`absolute 
-            ${fig.type === "circle" ? "rounded-full bg-red-400" : ""}
-            ${fig.type === "square" ? "bg-green-400" : ""}
-            ${
-              fig.type === "triangle"
-                ? "w-0 h-0 border-l-[32px] border-r-[32px] border-b-[64px] border-transparent border-b-yellow-400"
-                : ""
-            }
-            ${
-              fig.selected
-                ? "ring-4 ring-blue-500"
-                : fig.type === "triangle"
-                ? ""
-                : "shadow-xs shadow-black"
-            }
-            cursor-pointer`}*/
+              className={`absolute ${
+                fig.selected ? "ring-4 ring-blue-500" : ""
+              } cursor-pointer`}
               style={{
                 left: fig.x,
                 top: fig.y,

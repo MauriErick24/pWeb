@@ -17,10 +17,30 @@ interface Figure {
   src?: string;
 }
 
+// interface dataToSave {
+//   img: string;
+// }
+
+interface dificultyType {
+  easyStart: number;
+  easyEnd: number;
+  mediumStart: number;
+  mediumEnd: number;
+  hardStart: number;
+  hardEnd: number;
+}
+interface Question {
+  title: string;
+  description: string;
+  question: string;
+  dificulty: dificultyType;
+}
+
 type ResponseAreaType = {
   figures: Figure[];
-  setFigures: React.Dispatch<React.SetStateAction<Figure[]>>;
+  // setFigures: React.Dispatch<React.SetStateAction<Figure[]>>;
   canvasRef: React.RefObject<HTMLDivElement | null>;
+  question: Question | null;
 };
 
 type IconType = ">" | "<" | ">=" | "<=" | "=";
@@ -32,10 +52,12 @@ type AnswerItem =
 export const ResponseArea: React.FC<ResponseAreaType> = ({
   figures,
   canvasRef,
+  question,
 }) => {
   const [answer, setAnswer] = useState<AnswerItem[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [image, setImage] = useState<string | null>(null);
+  // const [data, setData] = useState<dataToSave | null>(null);
 
   const openModal = async () => {
     if (canvasRef.current) {
@@ -76,13 +98,11 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
   const handleSelect = (item: Figure) => {
     const last = answer[answer.length - 1];
 
-    //  No permitir figura si la anterior también es figura
     if (last?.kind === "figure") {
       toast.error("No puedes agregar dos figuras seguidas.");
       return;
     }
 
-    //  No repetir figura
     const alreadyUsed = answer.some(
       (el) => el.kind === "figure" && el.data.id === item.id
     );
@@ -101,6 +121,19 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
   const handleResetLast = () => {
     if (answer.length > 0) {
       setAnswer((prev) => prev.slice(0, -1));
+    }
+  };
+
+  const handleClickSave = async () => {
+    if (canvasRef.current) {
+      const canvas = await html2canvas(canvasRef.current);
+      const dataURL = canvas.toDataURL("image/png");
+      const data = { img: dataURL, question };
+
+      // console.log("🚀 ~ handleClickSave ~ question:", question);
+      console.log("🚀 ~ handleClickSave ~ data:", data);
+    } else {
+      toast.error("No se pudo capturar el área de trabajo.");
     }
   };
 
@@ -143,7 +176,10 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
                     }
                   })()
                 ) : (
-                  <div style={{ width: 40, height: 40 }} className="flex items-center justify-center">
+                  <div
+                    style={{ width: 40, height: 40 }}
+                    className="flex items-center justify-center"
+                  >
                     {resp.data.type === "circle" ? (
                       <div className="w-10 h-10 rounded-full bg-red-400"></div>
                     ) : resp.data.type === "square" ? (
@@ -284,6 +320,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
           disabled={!isValidAnswer()}
+          onClick={handleClickSave}
         >
           Aceptar
         </button>
