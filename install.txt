@@ -27,8 +27,7 @@ PASOS PARA EJECUTAR:
 
 3. Construir e iniciar todos los servicios como superusuario:
    cd backend
-   docker-compose up --build  (detalles de error numeral)
-
+   docker-compose up --build
 
    Esto levantará:
    - El frontend en React (http://localhost:5173)
@@ -46,9 +45,6 @@ PASOS PARA EJECUTAR:
 
 BASE DE DATOS:
 --------------
-- Usuario: postgres
-- Contraseña: postgres
-- Nombre de base: appdb
 - La base de datos se crea automáticamente al iniciar.
 
 NOTAS ADICIONALES:
@@ -65,4 +61,3 @@ Si tiene problemas para ejecutar el proyecto, asegúrese de:
 - Que Docker esté correctamente instalado y el servicio activo.
 - Verificar los logs con:
   docker-compose logs -f
-
