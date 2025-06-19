@@ -1,0 +1,68 @@
+INSTALACIÓN Y EJECUCIÓN DEL PROYECTO
+
+REQUISITOS PREVIOS:
+-------------------
+- Tener instalado Docker y Docker Compose.
+- Tener Git instalado.
+- Puerto 5173, 8080 y 5000 disponibles (ajustar según se indique en docker-compose.yml).
+- Acceso a Internet para instalar dependencias la primera vez.
+
+ESTRUCTURA DEL PROYECTO:
+------------------------
+- /frontend        → Aplicación React + TypeScript (cliente web)
+- /backend/shapes  → Backend principal en Java Spring Boot
+- /backend/bgRemover → Microservicio en Python para eliminar fondo de imágenes
+- /docker-compose.yml → Orquestador principal de servicios
+
+PASOS PARA EJECUTAR:
+--------------------
+
+1. Clonar el repositorio:
+   git clone https://github.com/MauriErick24/pWeb.git
+   cd pWeb
+
+2. Verificar que Docker esté funcionando:
+   docker --version
+   docker-compose --version
+
+3. Construir e iniciar todos los servicios como superusuario:
+   cd backend
+   docker-compose up --build  (detalles de error numeral)
+
+
+   Esto levantará:
+   - El frontend en React (http://localhost:5173)
+   - El backend en Spring Boot (http://localhost:8080)
+   - El microservicio de Python (http://localhost:5000)
+   - La base de datos PostgreSQL (puerto interno 5432)
+
+4. Acceder a la aplicación (probado en Chrome y Opera):
+   Abre tu navegador y entra a:
+   http://localhost:5173
+
+5. Parar los servicios:
+   Presiona Ctrl + C y luego:
+   docker-compose down
+
+BASE DE DATOS:
+--------------
+- Usuario: postgres
+- Contraseña: postgres
+- Nombre de base: appdb
+- La base de datos se crea automáticamente al iniciar.
+
+NOTAS ADICIONALES:
+------------------
+- Debe registrarse en la página e iniciar sesion para poder utilizar las funciones.
+- Las credenciales y configuraciones se pueden modificar en el archivo docker-compose.yml en la carpeta backend. 
+- El frontend está configurado para comunicarse automáticamente con el backend según las rutas definidas en el entorno Docker.
+- El microservicio de Python escucha por imágenes que se le envían para procesarlas.
+
+SOPORTE:
+--------
+Si tiene problemas para ejecutar el proyecto, asegúrese de:
+- Que ningún otro proceso esté usando los puertos indicados.
+- Que Docker esté correctamente instalado y el servicio activo.
+- Verificar los logs con:
+  docker-compose logs -f
+
