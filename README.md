@@ -71,6 +71,7 @@ Nota: Después de instalar, reinicia tu terminal o ejecuta source ~/.bashrc, sou
 # Clonar el repositorio
 git clone https://github.com/MauriErick24/pWeb.git
 cd pWeb
+cd frontend
 
 # Instalar dependencias
 bun install
