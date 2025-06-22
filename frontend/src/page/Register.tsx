@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import axios from "axios";
 
 interface RegisterForm {
   nombre: string;
@@ -25,17 +26,25 @@ const Register = () => {
   ) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       setLoading(true);
       await api.post("/auth/register", form);
       navigate("/login");
     } catch (error) {
       console.log("🚀 ~ handleSubmit ~ error:", error);
-      const status = error.response.data.status;
-      console.log("🚀 ~ handleSubmit ~ status:", status);
-      if (status == 409) {
-        toast.error("Usuario ya registrado, por favor inicia sesion.");
+
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        console.log("🚀 ~ handleSubmit ~ status:", status);
+
+        if (status === 409) {
+          toast.error("Usuario ya registrado, por favor inicia sesión.");
+        } else {
+          toast.error(`Error desconocido (${status})`);
+        }
+      } else {
+        toast.error("Error inesperado. Intenta de nuevo.");
       }
     } finally {
       setLoading(false);
@@ -45,11 +54,11 @@ const Register = () => {
   return (
     <>
       {loading ? (
-        <div class="text-center">
+        <div className="text-center">
           <div role="status">
             <svg
               aria-hidden="true"
-              class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +72,7 @@ const Register = () => {
                 fill="currentFill"
               />
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       ) : (

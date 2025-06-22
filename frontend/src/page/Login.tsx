@@ -4,6 +4,7 @@ import api from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import axios from "axios";
 
 interface LoginForm {
   email: string;
@@ -20,19 +21,24 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
-      e.preventDefault();
       setLoading(true);
       const res = await api.post("/auth/login", form);
       login(res.data.token);
       navigate("/");
     } catch (error) {
-      const status = error.response.data.status;
-      if (status == 401) {
-        toast.error("Email o Contraseña incorrecto");
-      }
-      if (status == 404) {
-        toast.error("Usuario no encontrado");
+      if (axios.isAxiosError(error) && error.response) {
+        const status = error.response.status;
+        if (status === 401) {
+          toast.error("Email o Contraseña incorrecto");
+        } else if (status === 404) {
+          toast.error("Usuario no encontrado");
+        } else {
+          toast.error("Error desconocido: " + status);
+        }
+      } else {
+        toast.error("Ocurrió un error inesperado");
       }
     } finally {
       setLoading(false);
@@ -42,11 +48,11 @@ const Login = () => {
   return (
     <>
       {loading ? (
-        <div class="text-center">
+        <div className="text-center">
           <div role="status">
             <svg
               aria-hidden="true"
-              class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +66,7 @@ const Login = () => {
                 fill="currentFill"
               />
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       ) : (
