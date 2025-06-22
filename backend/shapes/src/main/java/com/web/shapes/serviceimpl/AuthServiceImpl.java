@@ -5,6 +5,9 @@ import com.web.shapes.dto.AuthRequest;
 import com.web.shapes.dto.AuthResponse;
 import com.web.shapes.dto.RegisterRequest;
 import com.web.shapes.entity.User;
+import com.web.shapes.exception.UserNotFoundException;
+import com.web.shapes.exception.UserRegisteredException;
+import com.web.shapes.exception.UserUnauthorizedException;
 import com.web.shapes.repository.UserRepository;
 import com.web.shapes.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +25,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.email())) {
-            throw new RuntimeException("Usuario ya registrado");
+            throw new UserRegisteredException("Usuario ya registrado");
         }
-
         User user = User.builder()
                 .nombre(request.nombre())
                 .email(request.email())
@@ -40,10 +42,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponse authenticate(AuthRequest request) {
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
-            throw new RuntimeException("Credenciales inválidas");
+            throw new UserUnauthorizedException("Credenciales inválidas");
         }
 
         String token = jwtService.generateToken(user);

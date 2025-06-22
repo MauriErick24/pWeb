@@ -1,4 +1,3 @@
-import React from "react";
 import { toast } from "sonner";
 import {
   ArrowUpIcon,
@@ -27,11 +26,13 @@ interface Figure {
 type ControlPanelType = {
   figures: Figure[];
   setFigures: React.Dispatch<React.SetStateAction<Figure[]>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const ControlPanel: React.FC<ControlPanelType> = ({
   setFigures,
   figures,
+  setLoading,
 }) => {
   const handleUp = () => {
     setFigures((prev) =>
@@ -96,6 +97,7 @@ export const ControlPanel: React.FC<ControlPanelType> = ({
     }
 
     try {
+      setLoading(true);
       const blob = await fetch(selectedImage.src).then((res) => res.blob());
       const formData = new FormData();
       formData.append("image", blob, "image.png");
@@ -113,8 +115,14 @@ export const ControlPanel: React.FC<ControlPanelType> = ({
           fig.id === selectedImage.id ? { ...fig, src: newUrl } : fig
         )
       );
+      toast.success("El fondo se ha quitado.");
     } catch (error) {
       console.error("Error al quitar fondo:", error);
+      toast.error(
+        "Hubo un error al quitar el fondo. Revise su conexion con el servidor."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 

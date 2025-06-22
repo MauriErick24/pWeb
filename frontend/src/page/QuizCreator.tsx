@@ -26,6 +26,7 @@ interface dificultyType {
   hardStart: number;
   hardEnd: number;
 }
+
 interface Question {
   title: string;
   description: string;
@@ -37,23 +38,34 @@ const QuizCreator = () => {
   const [figures, setFigures] = useState<Figure[]>([]);
   const [question, setQuestion] = useState<Question | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
+  const [loading, setLoading] = useState(false);
 
   return (
     <div>
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-100 z-50">
+          <div className="flex flex-col items-center justify-center bg-white p-6 rounded-xl shadow-lg">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-gray-700 text-center">Por favor espere...</p>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col w-full min-h-screen bg-gray-50">
         <Header />
         <main className="flex-1 container mx-auto px-4 py-6 md:px-6">
-          <QuestionDetails
-            // question={question}
-            setQuestion={setQuestion}
-          />
+          <QuestionDetails setQuestion={setQuestion} />
 
           <h1 className="text-2xl font-bold text-indigo-800 mb-6">
             Apila las figuras
           </h1>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-2">
-              <ControlPanel setFigures={setFigures} figures={figures} />
+              <ControlPanel
+                setFigures={setFigures}
+                figures={figures}
+                setLoading={setLoading}
+              />
             </div>
             <div className="lg:col-span-7">
               <Workspace
@@ -73,6 +85,7 @@ const QuizCreator = () => {
             figures={figures}
             canvasRef={canvasRef}
             question={question}
+            setLoading={setLoading}
           />
         </main>
       </div>

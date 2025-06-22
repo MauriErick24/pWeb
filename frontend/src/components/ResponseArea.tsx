@@ -41,6 +41,7 @@ type ResponseAreaType = {
   // setFigures: React.Dispatch<React.SetStateAction<Figure[]>>;
   canvasRef: React.RefObject<HTMLDivElement | null>;
   question: Question | null;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type IconType = ">" | "<" | ">=" | "<=" | "=";
@@ -53,6 +54,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
   figures,
   canvasRef,
   question,
+  setLoading,
 }) => {
   const [answer, setAnswer] = useState<AnswerItem[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -60,13 +62,22 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
   // const [data, setData] = useState<dataToSave | null>(null);
 
   const openModal = async () => {
-    if (canvasRef.current) {
-      const canvas = await html2canvas(canvasRef.current);
-      const dataURL = canvas.toDataURL("image/png");
-      setImage(dataURL);
-      setModalOpen(true);
-    } else {
-      toast.error("No se pudo capturar el área de trabajo.");
+    setLoading(true);
+
+    try {
+      if (canvasRef.current) {
+        const canvas = await html2canvas(canvasRef.current);
+        const dataURL = canvas.toDataURL("image/png");
+        setImage(dataURL);
+        setModalOpen(true);
+      } else {
+        toast.error("No se pudo capturar el área de trabajo.");
+      }
+    } catch (error) {
+      toast.error("Ocurrió un error al capturar la imagen.");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
