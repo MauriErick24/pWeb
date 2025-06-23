@@ -59,6 +59,7 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
   const [answer, setAnswer] = useState<AnswerItem[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [image, setImage] = useState<string | null>(null);
+  const token = localStorage.getItem("token");
   // const [data, setData] = useState<dataToSave | null>(null);
 
   const openModal = async () => {
@@ -136,16 +137,27 @@ export const ResponseArea: React.FC<ResponseAreaType> = ({
   };
 
   const handleClickSave = async () => {
-    if (canvasRef.current) {
-      const canvas = await html2canvas(canvasRef.current);
-      const dataURL = canvas.toDataURL("image/png");
-      const data = { img: dataURL, question };
+    if (!canvasRef.current || !question) return;
 
-      // console.log("🚀 ~ handleClickSave ~ question:", question);
-      console.log("🚀 ~ handleClickSave ~ data:", data);
-    } else {
-      toast.error("No se pudo capturar el área de trabajo.");
-    }
+    const canvas = await html2canvas(canvasRef.current);
+    const img = canvas.toDataURL("image/png");
+
+    const payload = {
+      ...question,
+      img,
+      answer: JSON.stringify(answer), // guarda como string JSON
+    };
+
+    await fetch("http://localhost:8080/api/preguntas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    toast.success("Pregunta guardada correctamente");
   };
 
   return (

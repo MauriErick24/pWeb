@@ -5,7 +5,7 @@ interface AddQuestionButtonProps {
   onClick: () => void;
 }
 
-const AddQuestionButton: FC<AddQuestionButtonProps> = ({ onClick }) => {
+export const AddQuestionButton: FC<AddQuestionButtonProps> = ({ onClick }) => {
   return (
     <div className="flex justify-end mb-4">
       <button
@@ -17,5 +17,3 @@ const AddQuestionButton: FC<AddQuestionButtonProps> = ({ onClick }) => {
     </div>
   );
 };
-
-export default AddQuestionButton;
